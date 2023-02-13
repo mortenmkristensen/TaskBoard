@@ -67,7 +67,7 @@
     });
     let filterButton = document.getElementById("filter-button");
     filterButton.addEventListener("click", () => {
-        let filterValue = window.prompt("Enter the filter value (true or false)");
+        let filterValue = window.prompt("Filter by IsComplete (true or false)");
         filterValue = filterValue === "true";
         fetch(apiUrl)
             .then(response => response.json())
