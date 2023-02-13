@@ -31,28 +31,28 @@ namespace TaskAPI.DBAccess {
         }
 
         public IEnumerable<Assignment> Get() {
-            Task<List<Assignment>> assignments = null;
+            List<Assignment> assignments = null;
             try {
-                assignments = Collection.Find<Assignment>(f => true).ToListAsync();
+                assignments = Collection.Find<Assignment>(f => true).ToListAsync().Result;
             }
             catch (MongoException me) {
                 throw new Exception("Something went wrong when trying to get the assignmets", me);
             }
-            return assignments.Result;
+            return assignments;
         }
         public Assignment Get(string id) {
-            Task<Assignment> assignment = null;
+            Assignment assignment = null;
             try {
                 if (id != null) {
                     var objectId = new ObjectId(id);
                     var filter = Builders<Assignment>.Filter.Eq("_id", objectId);
-                    assignment = Collection.Find(filter).FirstOrDefaultAsync();
+                    assignment = Collection.Find(filter).FirstOrDefaultAsync().Result;
                 }
             }
             catch (MongoException me) {
                 throw new Exception("Something went wrong when trying to get a script", me);
             }
-            return assignment.Result;
+            return assignment;
         }
 
         public Assignment Upsert(Assignment assignment) {
